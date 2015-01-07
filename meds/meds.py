@@ -614,7 +614,7 @@ class MEDS(object):
         """
         import os
 
-        psf_path = self.get_source_path(iobj, iexp).replace(
+        psf_path = self.get_source_path(iobj, icutout).replace(
             '.fits.fz','_psfcat.psf')
 
         if replace_root:
