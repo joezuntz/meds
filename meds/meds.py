@@ -592,6 +592,39 @@ class MEDS(object):
         info=self.get_source_info(iobj, icutout)
         return info['sky_path']
 
+    def get_psf_path(self, iobj, icutout, replace_root=False):
+        """
+        Get the basic path to the PSFEx PSF file for the given exposure.
+
+        parameters
+        ----------
+        iobj:
+            Index of the object
+        icutout:
+            Index of the cutout for this object.
+
+        replace_root:
+            (Optional) If True, replace the DESDATA part
+            of the filename with its value in the current
+            environment.
+
+        returns
+        -------
+        The path to the PSF file.
+        """
+        import os
+
+        psf_path = self.get_source_path(iobj, iexp).replace(
+            '.fits.fz','_psfcat.psf')
+
+        if replace_root:
+            old_root=self.get_meta()['DESDATA'][0]
+            new_root=os.environ['DESDATA']
+            psf_path = psf_path.replace(old_root, new_root)
+
+        return psf_path
+
+
 
     def get_cat(self):
         """
